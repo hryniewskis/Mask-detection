@@ -2,17 +2,20 @@ import os
 import cv2
 import keras
 import numpy as np
-
-path = os.getcwd() + "/scripts/imagenet.h5"
-imagenet = keras.models.load_model("scripts/imagenet.h5")
+#print(path)
+path = os.getcwd() + "\scripts\imagenet.h5"
+imagenet = keras.models.load_model("scripts\imagenet.h5")
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 vid = cv2.VideoCapture(0)
+
+video_writer = cv2.VideoWriter("output1.mp4", cv2.VideoWriter_fourcc(*"mp4v"), 8, (640, 480))
 
 while True:
 
     # Capture the video frame
     # by frame
     ret, im = vid.read()
+
     #print(im)
     # Display the resulting frame
     gray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
@@ -34,10 +37,10 @@ while True:
                 cv2.putText(im, "No mask!", (x, y-10),cv2.FONT_HERSHEY_SIMPLEX,0.8,(0,0,255),2)
                 cv2.rectangle(im, (x, y), (x + w, y + h), (0, 0, 255), 2)
             if result[0][0] <= 0.5:
-                cv2.putText(im, "Mask" + str(), (x, y-10),cv2.FONT_HERSHEY_SIMPLEX,0.8,(0,128,0),2)
+                cv2.putText(im, "Mask" + str(), (x, y-10),cv2. FONT_HERSHEY_SIMPLEX,0.8,(0,128,0),2)
                 cv2.rectangle(im, (x, y), (x + w, y + h), (0, 128, 0), 2)
 
-
+    video_writer.write(im)
     cv2.imshow('frame', im)
     #print(result)
     # the 'q' button is set as the
@@ -48,6 +51,7 @@ while True:
 
 # After the loop release the cap object
 vid.release()
+video_writer.release()
 
 # Destroy all the windows
 cv2.destroyAllWindows()

@@ -1,0 +1,7 @@
+keras~=2.7.0
+tensorflow~=2.7.0
+matplotlib~=3.5.1
+lime~=0.2.0.1
+numpy~=1.21.4
+scikit-image~=0.19.1
+opencv-python~=4.5.4.60
