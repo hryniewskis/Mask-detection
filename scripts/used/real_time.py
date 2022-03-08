@@ -4,7 +4,7 @@ import keras
 import numpy as np
 
 path = os.getcwd() + "/scripts/imagenet.h5"
-imagenet = keras.models.load_model("scripts/MK/imagenet.h5")
+imagenet = keras.models.load_model("scripts/imagenet.h5")
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 vid = cv2.VideoCapture(0)
 

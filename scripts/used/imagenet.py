@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow.keras import layers
-from keras.models import Model, load_model
+from keras.models import Model
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.optimizers import RMSprop
 import os
@@ -14,7 +14,7 @@ for layer in trained_model.layers:
     layer.trainable = False
 
 last_layer = trained_model.get_layer('mixed7')
-print('last layer output shape: ', last_layer.output_shape)
+
 last_output = last_layer.output
 
 
@@ -32,7 +32,7 @@ model.compile(optimizer = RMSprop(lr=0.0001),
 
 path = os.getcwd()
 path = os.path.join(path, 'dataset')
-
+print(path)
 # declare train_path
 path_train = os.path.join(path, 'Train')
 
