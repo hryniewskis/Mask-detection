@@ -5,8 +5,8 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.optimizers import RMSprop
 import os
 
-# model 1
-# link to source: https://github.com/chandrikadeb7/Face-Mask-Detection
+# The model is a modification of the model available under the link:
+# https://github.com/chandrikadeb7/Face-Mask-Detection
 
 trained_model = tf.keras.applications.InceptionV3(input_shape=(224, 224, 3), include_top=False, weights='imagenet')
 

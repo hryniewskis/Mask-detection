@@ -42,42 +42,31 @@ explanation = explainer.explain_instance(img.astype('double'),
                                          batch_size=1,
                                          num_samples=1000)
 
+explanation = explainer.explain_instance(img.astype('double'),
+                                         model.predict,
+                                         top_labels=2,
+                                         hide_color=0,
+                                         num_samples=1000)
 
-
-
+# Why model has classified the image in this way?
 temp, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only=True, num_features=5, hide_rest=True)
-
 plt.imshow(mark_boundaries(temp, mask))
 
-temp, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only=False, num_features=10, hide_rest=False)
+# What is the probability that the person has a mask on the image?
+print(model.predict(img.reshape(1,150, 100,3)))
+
+# 10 regions with the highest weight on the result (mask- red, no mask- green)
+temp, mask = explanation.get_image_and_mask(label=0, positive_only=False, num_features=10, hide_rest=False)
 plt.imshow(mark_boundaries(temp / 2 + 0.5, mask))
 
-
-temp, mask = explanation.get_image_and_mask(explanation.top_labels[0], positive_only=False, num_features=30, hide_rest=False, min_weight=0.01)
+# regions with the weight at least 0.1
+temp, mask = explanation.get_image_and_mask(label=0, positive_only=False, hide_rest=False, min_weight=0.2)
 plt.imshow(mark_boundaries(temp / 2 + 0.5, mask))
 
-model.predict(img.reshape(1, 150, 100, 3))
-
-
-y_proba = model.predict(img.reshape(1, 150, 100, 3))
-y_classes = keras.utils.probas_to_classes(y_proba)
-
-model.predict_classes()
-
-ind =  explanation.top_labels[0]
-
-#Map each explanation weight to the corresponding superpixel
-dict_heatmap = dict(explanation.local_exp[ind])
+#Mapping each explanation weight to the corresponding superpixel
+dict_heatmap = dict(explanation.local_exp[0])
 heatmap = np.vectorize(dict_heatmap.get)(explanation.segments)
 
-#Plot. The visualization makes more sense if a symmetrical colorbar is used.
-plt.imshow(heatmap, cmap = 'RdBu', vmin  = -heatmap.max(), vmax = heatmap.max())
+#Ploting of the visualization, makes more sense if a symmetrical colorbar is used
+plt.imshow(heatmap, cmap = 'RdBu', vmin = -heatmap.max(), vmax = heatmap.max())
 plt.colorbar()
-
-img_3 = next(train_generator)[0][0]
-img_3.shape
-color.rgb2gray(img_3.reshape(1, 150, 100)).shape
-
-img_z = next(validation_generator)[0][0].reshape(1, 150, 100, 1)
-img_z.shape
-model.predict(img_z)

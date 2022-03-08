@@ -2,8 +2,8 @@ from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import os
-
-#linkg: https://data-flair.training/blogs/face-mask-detection-with-python/
+# The model is a modification of the model available under the link:
+# https://data-flair.training/blogs/face-mask-detection-with-python/
 
 # model 2
 model = Sequential([
